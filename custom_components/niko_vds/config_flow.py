@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 import voluptuous as vol
@@ -23,6 +24,8 @@ from .const import (
     DOMAIN,
     MIN_POLL_INTERVAL,
 )
+
+LOGGER = logging.getLogger(__name__)
 
 
 def _build_schema(defaults: dict[str, Any]) -> vol.Schema:
@@ -76,10 +79,24 @@ class NikoVdsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             try:
                 result = await self.hass.async_add_executor_job(client.validate)
             except NikoVdsAuthError:
+                LOGGER.warning(
+                    "Niko VDS authentication failed during config flow for controller %s",
+                    normalized[CONF_CONTROLLER_IP],
+                    exc_info=True,
+                )
                 errors["base"] = "invalid_auth"
             except NikoVdsConnectionError:
+                LOGGER.warning(
+                    "Niko VDS connection failed during config flow for controller %s",
+                    normalized[CONF_CONTROLLER_IP],
+                    exc_info=True,
+                )
                 errors["base"] = "cannot_connect"
             except Exception:  # noqa: BLE001
+                LOGGER.exception(
+                    "Unexpected Niko VDS error during config flow for controller %s",
+                    normalized[CONF_CONTROLLER_IP],
+                )
                 errors["base"] = "unknown"
             else:
                 await self.async_set_unique_id(result.controller_id)
@@ -127,10 +144,24 @@ class NikoVdsOptionsFlow(config_entries.OptionsFlow):
             try:
                 await self.hass.async_add_executor_job(client.validate)
             except NikoVdsAuthError:
+                LOGGER.warning(
+                    "Niko VDS authentication failed during options flow for controller %s",
+                    normalized[CONF_CONTROLLER_IP],
+                    exc_info=True,
+                )
                 errors["base"] = "invalid_auth"
             except NikoVdsConnectionError:
+                LOGGER.warning(
+                    "Niko VDS connection failed during options flow for controller %s",
+                    normalized[CONF_CONTROLLER_IP],
+                    exc_info=True,
+                )
                 errors["base"] = "cannot_connect"
             except Exception:  # noqa: BLE001
+                LOGGER.exception(
+                    "Unexpected Niko VDS error during options flow for controller %s",
+                    normalized[CONF_CONTROLLER_IP],
+                )
                 errors["base"] = "unknown"
             else:
                 return self.async_create_entry(data=normalized)

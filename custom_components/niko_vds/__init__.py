@@ -7,6 +7,7 @@ from pathlib import Path
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryNotReady
 
 from .api import NikoVdsClient, NikoVdsClientConfig
 from .const import (
@@ -80,7 +81,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         )
     )
     coordinator = NikoVdsCoordinator(hass, client, merged[CONF_POLL_INTERVAL])
-    await coordinator.async_config_entry_first_refresh()
+    try:
+        await coordinator.async_config_entry_first_refresh()
+    except Exception as err:  # noqa: BLE001
+        LOGGER.exception(
+            "Failed to set up Niko VDS entry for controller %s",
+            merged[CONF_CONTROLLER_IP],
+        )
+        raise ConfigEntryNotReady(str(err)) from err
 
     entry.runtime_data = NikoVdsRuntimeData(
         client=client,
