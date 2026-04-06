@@ -57,7 +57,14 @@ class NikoVdsCamera(NikoVdsCoordinatorEntity, Camera):
 
     @property
     def content_type(self) -> str:
-        return self.coordinator.data.content_types.get(self._mac_address, "image/jpeg")
+        return self.coordinator.data.content_types.get(
+            self._mac_address,
+            getattr(self, "_content_type", "image/jpeg"),
+        )
+
+    @content_type.setter
+    def content_type(self, value: str) -> None:
+        self._content_type = value
 
     @property
     def extra_state_attributes(self) -> dict[str, str | int]:
