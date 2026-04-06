@@ -6,6 +6,7 @@
   ],
   "config_flow": true,
   "documentation": "https://github.com/ostracon/hacs-niko-vds",
+  "issue_tracker": "https://github.com/ostracon/hacs-niko-vds/issues",
   "iot_class": "local_polling",
   "requirements": [
     "paho-mqtt>=2.1.0"
