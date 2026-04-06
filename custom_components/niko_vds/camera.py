@@ -43,6 +43,10 @@ class NikoVdsCamera(NikoVdsCoordinatorEntity, Camera):
 
     def __init__(self, coordinator, controller_id: str, mac_address: str) -> None:
         Camera.__init__(self)
+        # Newer Home Assistant camera internals expect this to exist before
+        # provider refresh runs during entity setup.
+        if not hasattr(self, "_webrtc_provider"):
+            self._webrtc_provider = None
         NikoVdsCoordinatorEntity.__init__(self, coordinator, controller_id, mac_address)
         self._attr_unique_id = f"{controller_id}:{mac_address}:camera"
 
