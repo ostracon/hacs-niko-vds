@@ -42,7 +42,8 @@ class NikoVdsCamera(NikoVdsCoordinatorEntity, Camera):
     _attr_should_poll = False
 
     def __init__(self, coordinator, controller_id: str, mac_address: str) -> None:
-        super().__init__(coordinator, controller_id, mac_address)
+        Camera.__init__(self)
+        NikoVdsCoordinatorEntity.__init__(self, coordinator, controller_id, mac_address)
         self._attr_unique_id = f"{controller_id}:{mac_address}:camera"
 
     @property
