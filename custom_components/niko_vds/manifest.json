@@ -1,0 +1,14 @@
+{
+  "domain": "niko_vds",
+  "name": "Niko VDS",
+  "codeowners": [
+    "@ostracon"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/ostracon/hacs-niko-vds",
+  "iot_class": "local_polling",
+  "requirements": [
+    "paho-mqtt>=2.1.0"
+  ],
+  "version": "0.1.0"
+}

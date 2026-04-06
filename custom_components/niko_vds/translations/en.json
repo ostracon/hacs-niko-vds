@@ -1,0 +1,49 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "This controller is already configured."
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the controller.",
+      "invalid_auth": "Failed to authenticate with the controller.",
+      "unknown": "Unexpected error."
+    },
+    "step": {
+      "user": {
+        "title": "Set up Niko VDS",
+        "description": "Provide the controller address and paste the certificate material needed for local access. Obtaining those credential files is the end user's responsibility.",
+        "data": {
+          "controller_ip": "Controller IP",
+          "cert_pem": "Client certificate PEM",
+          "key_pem": "Client key PEM",
+          "ca_cert_pem": "CA certificate PEM",
+          "verify_tls": "Verify TLS",
+          "poll_interval": "Polling interval (seconds)",
+          "manual_macs": "Manual VDS MACs"
+        }
+      }
+    }
+  },
+  "options": {
+    "error": {
+      "cannot_connect": "Failed to connect to the controller.",
+      "invalid_auth": "Failed to authenticate with the controller.",
+      "unknown": "Unexpected error."
+    },
+    "step": {
+      "init": {
+        "title": "Niko VDS options",
+        "description": "Update connection settings and optional manual VDS MACs.",
+        "data": {
+          "controller_ip": "Controller IP",
+          "cert_pem": "Client certificate PEM",
+          "key_pem": "Client key PEM",
+          "ca_cert_pem": "CA certificate PEM",
+          "verify_tls": "Verify TLS",
+          "poll_interval": "Polling interval (seconds)",
+          "manual_macs": "Manual VDS MACs"
+        }
+      }
+    }
+  }
+}

@@ -205,3 +205,14 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Niko VDS local secrets and captures
+secrets/
+*.crt
+*.key
+*.pem
+*_token*
+devices.json
+devices_*.json
+vds_*.jpg
+vds_*.png
